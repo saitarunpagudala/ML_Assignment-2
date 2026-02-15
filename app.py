@@ -35,6 +35,16 @@ model_option = st.selectbox(
     ],
     index=0
 )
+st.markdown("### 📥 Download Sample Test Data")
+with open("test_data.csv", "rb") as file:
+    st.download_button(
+        label="Download test_data.csv",
+        data=file,
+        file_name="test_data.csv",
+        mime="text/csv"
+    )
+
+st.markdown("---")
 
 if uploaded_file:
 
