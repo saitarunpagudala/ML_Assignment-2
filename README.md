@@ -1,11 +1,11 @@
-🧠 Breast Cancer Classification – ML Assignment 2
-📌 Problem Statement
+Breast Cancer Classification – ML Assignment 2
+**Problem Statement**
 
 The objective of this project is to build and compare multiple machine learning classification models to predict whether a breast tumor is Malignant (0) or Benign (1) using diagnostic medical features.
 
 The project also includes deployment of an interactive Streamlit web application that allows users to upload test data and evaluate trained models.
 
-📊 Dataset Description
+**Dataset Description**
 
 The dataset used is the Breast Cancer Wisconsin (Diagnostic) Dataset.
 
@@ -20,7 +20,7 @@ The dataset satisfies the assignment requirements of having more than 12 feature
 
 The dataset was split into training and test sets, and feature scaling was applied where required before training the models.
 
-🤖 Models Implemented
+**Models Implemented**
 
 The following six classification models were trained on the same dataset:
 
@@ -35,7 +35,7 @@ The following six classification models were trained on the same dataset:
 
 All models were trained using a consistent train-test split and evaluated on the test dataset.
 
-📈 Evaluation Metrics
+**Evaluation Metrics**
 
 Each model was evaluated using the following metrics:
 
@@ -51,7 +51,7 @@ F1 Score
 
 Matthews Correlation Coefficient (MCC)
 
-📊 Model Performance Comparison
+**Model Performance Comparison**
 | Model               | Accuracy | AUC  | Precision | Recall | F1 Score | MCC  |
 | ------------------- | -------- | ---- | --------- | ------ | -------- | ---- |
 | Logistic Regression | 0.97     | 0.99 | 0.97      | 0.99   | 0.98     | 0.94 |
@@ -61,7 +61,7 @@ Matthews Correlation Coefficient (MCC)
 | Random Forest       | 0.96     | 0.99 | 0.96      | 0.99   | 0.97     | 0.93 |
 | XGBoost             | 0.96     | 0.99 | 0.96      | 0.97   | 0.97     | 0.93 |
 
-🔍 Observations on Model Performance
+**Observations on Model Performance**
 | Model               | Observation                                                                            |
 | ------------------- | -------------------------------------------------------------------------------------- |
 | Logistic Regression | Performs strongly as a baseline model and achieves excellent recall and F1 score.      |
@@ -71,7 +71,7 @@ Matthews Correlation Coefficient (MCC)
 | Random Forest       | Achieves stable and high performance due to ensemble averaging.                        |
 | XGBoost             | Provides strong generalization and competitive performance using boosting techniques.  |
 
-🌐 Streamlit Web Application Features
+**Streamlit Web Application Features**
 
 The deployed Streamlit application provides:
 
@@ -100,7 +100,7 @@ Confusion Matrix
 The application is deployed using Streamlit Community Cloud and connected to the GitHub repository.
 
 
-📁 Project Structure
+** Project Structure**
 │-- app.py
 │-- requirements.txt
 │-- README.md
