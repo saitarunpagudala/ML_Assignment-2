@@ -1,49 +1,47 @@
 🧠 Breast Cancer Classification – ML Assignment 2
 📌 Problem Statement
 
-Build and compare multiple machine learning classification models to predict whether a breast tumor is Malignant (0) or Benign (1) using diagnostic features.
+The objective of this project is to build and compare multiple machine learning classification models to predict whether a breast tumor is Malignant (0) or Benign (1) using diagnostic medical features.
 
-The project also includes deployment of an interactive Streamlit web application for model evaluation.
+The project also includes deployment of an interactive Streamlit web application that allows users to upload test data and evaluate trained models.
 
-📊 Dataset
+📊 Dataset Description
 
-Breast Cancer Wisconsin (Diagnostic) Dataset
+The dataset used is the Breast Cancer Wisconsin (Diagnostic) Dataset.
 
-Instances: 569
+| Attribute       | Value                     |
+| --------------- | ------------------------- |
+| Total Instances | 569                       |
+| Total Features  | 30 numerical features     |
+| Target Classes  | 0 → Malignant, 1 → Benign |
+| Problem Type    | Binary Classification     |
 
-Features: 30 numerical features
+The dataset satisfies the assignment requirements of having more than 12 features and more than 500 samples.
 
-Target Variable:
-
-0 → Malignant
-
-1 → Benign
-
-The dataset satisfies assignment constraints (≥12 features and ≥500 samples).
+The dataset was split into training and test sets, and feature scaling was applied where required before training the models.
 
 🤖 Models Implemented
 
-The following six classification models were trained and saved as .pkl files:
+The following six classification models were trained on the same dataset:
 
-Logistic Regression
+| Model Type              | Model Name                |
+| ----------------------- | ------------------------- |
+| Linear Model            | Logistic Regression       |
+| Tree-Based Model        | Decision Tree             |
+| Distance-Based Model    | K-Nearest Neighbors (KNN) |
+| Probabilistic Model     | Naive Bayes (Gaussian)    |
+| Ensemble Model          | Random Forest             |
+| Ensemble Boosting Model | XGBoost                   |
 
-Decision Tree
-
-K-Nearest Neighbors (KNN)
-
-Naive Bayes (Gaussian)
-
-Random Forest
-
-XGBoost
-
-All models were trained using a train-test split and evaluated on the test set.
+All models were trained using a consistent train-test split and evaluated on the test dataset.
 
 📈 Evaluation Metrics
 
-Each model was evaluated using:
+Each model was evaluated using the following metrics:
 
 Accuracy
+
+AUC Score
 
 Precision
 
@@ -51,39 +49,31 @@ Recall
 
 F1 Score
 
-Classification Report
+Matthews Correlation Coefficient (MCC)
 
-Confusion Matrix
+📊 Model Performance Comparison
+| Model               | Accuracy | AUC  | Precision | Recall | F1 Score | MCC  |
+| ------------------- | -------- | ---- | --------- | ------ | -------- | ---- |
+| Logistic Regression | 0.97     | 0.99 | 0.97      | 0.99   | 0.98     | 0.94 |
+| Decision Tree       | 0.93     | 0.92 | 0.94      | 0.94   | 0.94     | 0.87 |
+| KNN                 | 0.95     | 0.98 | 0.96      | 0.96   | 0.96     | 0.90 |
+| Naive Bayes         | 0.96     | 0.97 | 0.96      | 0.99   | 0.97     | 0.92 |
+| Random Forest       | 0.96     | 0.99 | 0.96      | 0.99   | 0.97     | 0.93 |
+| XGBoost             | 0.96     | 0.99 | 0.96      | 0.97   | 0.97     | 0.93 |
 
-| Model               | Accuracy | Precision | Recall | F1 Score |
-| ------------------- | -------- | --------- | ------ | -------- |
-| Logistic Regression | 0.97     | 0.97      | 0.99   | 0.98     |
-| Decision Tree       | 0.93     | 0.94      | 0.94   | 0.94     |
-| KNN                 | 0.95     | 0.96      | 0.96   | 0.96     |
-| Naive Bayes         | 0.96     | 0.96      | 0.99   | 0.97     |
-| Random Forest       | 0.96     | 0.96      | 0.99   | 0.97     |
-| XGBoost             | 0.96     | 0.96      | 0.97   | 0.97     |
-
-
-(Results may vary slightly depending on random state.)
-
-🔍 Observations
-
-Logistic Regression performs strongly as a baseline model.
-
-Decision Tree shows slightly lower generalization performance.
-
-KNN performs well after feature scaling.
-
-Naive Bayes performs competitively despite independence assumptions.
-
-Random Forest and XGBoost provide consistently high performance due to ensemble learning.
-
-Overall, ensemble methods achieve strong stability and accuracy.
+🔍 Observations on Model Performance
+| Model               | Observation                                                                            |
+| ------------------- | -------------------------------------------------------------------------------------- |
+| Logistic Regression | Performs strongly as a baseline model and achieves excellent recall and F1 score.      |
+| Decision Tree       | Slightly lower performance compared to other models and may show signs of overfitting. |
+| KNN                 | Performs well after feature scaling and maintains balanced precision and recall.       |
+| Naive Bayes         | Performs competitively despite strong independence assumptions.                        |
+| Random Forest       | Achieves stable and high performance due to ensemble averaging.                        |
+| XGBoost             | Provides strong generalization and competitive performance using boosting techniques.  |
 
 🌐 Streamlit Web Application Features
 
-The deployed Streamlit app provides:
+The deployed Streamlit application provides:
 
 CSV test dataset upload
 
@@ -107,7 +97,8 @@ Detailed Classification Report
 
 Confusion Matrix
 
-The results update only when the Evaluate Model button is clicked.
+The application is deployed using Streamlit Community Cloud and connected to the GitHub repository.
+
 
 📁 Project Structure
 │-- app.py
@@ -124,6 +115,4 @@ The results update only when the Evaluate Model button is clicked.
     │-- Random Forest.pkl
     │-- XGBoost.pkl
 
-🚀 Deployment
 
-The application is deployed using Streamlit Community Cloud, connected to the GitHub repository.
