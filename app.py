@@ -35,6 +35,7 @@ model_option = st.selectbox(
     ],
     index=0
 )
+
 st.markdown("### 📥 Download Sample Test Data")
 with open("test_data.csv", "rb") as file:
     st.download_button(
@@ -46,75 +47,86 @@ with open("test_data.csv", "rb") as file:
 
 st.markdown("---")
 
-run_button = st.button("📊 Evaluate Model", disabled=not uploaded_file)
+if "results" not in st.session_state:
+    st.session_state.results = None
 
-if uploaded_file and run_button:
+if st.button("📊 Evaluate Model", disabled=not uploaded_file):
 
     data = pd.read_csv(uploaded_file)
 
-    if "target" not in data.columns:
-        st.error("Uploaded CSV must contain a 'target' column.")
-    else:
+    if "target" in data.columns:
         X = data.drop("target", axis=1)
         y = data["target"]
+
+        try:
+            scaler = joblib.load("model/scaler.pkl")
+            X = scaler.transform(X)
+        except:
+            pass
 
         model = joblib.load(f"model/{model_option}.pkl")
         y_pred = model.predict(X)
 
-        st.markdown("## 📊 Model Evaluation Results")
+        st.session_state.results = {
+            "y": y,
+            "y_pred": y_pred,
+            "model_name": model_option
+        }
 
-        # --- Metrics Summary ---
-        accuracy = accuracy_score(y, y_pred)
-        precision = precision_score(y, y_pred)
-        recall = recall_score(y, y_pred)
-        f1 = f1_score(y, y_pred)
+if st.session_state.results is not None:
 
-        col1, col2, col3, col4 = st.columns(4)
-        col1.metric("Accuracy", f"{accuracy:.2f}")
-        col2.metric("Precision", f"{precision:.2f}")
-        col3.metric("Recall", f"{recall:.2f}")
-        col4.metric("F1 Score", f"{f1:.2f}")
+    y = st.session_state.results["y"]
+    y_pred = st.session_state.results["y_pred"]
+    model_name = st.session_state.results["model_name"]
 
-        st.markdown("---")
+    st.markdown(f"## 📊 Results for {model_name}")
 
-        # --- Classification Report ---
-        st.markdown("### 📄 Detailed Classification Report")
-        st.text(classification_report(y, y_pred))
+    accuracy = accuracy_score(y, y_pred)
+    precision = precision_score(y, y_pred)
+    recall = recall_score(y, y_pred)
+    f1 = f1_score(y, y_pred)
 
-        st.markdown("---")
+    col1, col2, col3, col4 = st.columns(4)
+    col1.metric("Accuracy", f"{accuracy:.2f}")
+    col2.metric("Precision", f"{precision:.2f}")
+    col3.metric("Recall", f"{recall:.2f}")
+    col4.metric("F1 Score", f"{f1:.2f}")
 
-        # --- Confusion Matrix ---
-        st.markdown("### 🔍 Confusion Matrix")
+    st.markdown("---")
 
-        col1, col2, col3 = st.columns([1,2,1])
-        with col2:
-            fig, ax = plt.subplots(figsize=(3,3))
+    st.markdown("### 📄 Detailed Classification Report")
+    st.text(classification_report(y, y_pred))
 
-            sns.heatmap(
-                    confusion_matrix(y, y_pred),
-                    annot=True,
-                    fmt="d",
-                    cmap="Blues",
-                    cbar=False,  # 🔥 removes color bar (huge space saver)
-                    annot_kws={"size": 9}
-            )
-            ax.set_xlabel("Predicted", fontsize=8)
-            ax.set_ylabel("Actual", fontsize=8)
+    st.markdown("---")
 
-            plt.xticks(fontsize=8)
-            plt.yticks(fontsize=8)
-            plt.tight_layout()
-            st.pyplot(fig, use_container_width=False)
+    st.markdown("### 🔍 Confusion Matrix")
 
-        st.markdown("---")
+    colA, colB, colC = st.columns([1, 2, 1])
+    with colB:
+        fig, ax = plt.subplots(figsize=(3, 3))
 
-        # --- Explanation Section ---
-        st.markdown("### ℹ️ Metric Explanation")
+        sns.heatmap(
+            confusion_matrix(y, y_pred),
+            annot=True,
+            fmt="d",
+            cmap="Blues",
+            cbar=False
+        )
 
-        st.write("""
-        - **Accuracy**: Overall correctness of the model.
-        - **Precision**: Out of predicted positives, how many are correct.
-        - **Recall**: Out of actual positives, how many were detected.
-        - **F1 Score**: Harmonic mean of precision and recall.
-        - **Confusion Matrix**: Shows correct and incorrect predictions.
-        """)
+        ax.set_xlabel("Predicted")
+        ax.set_ylabel("Actual")
+
+        plt.tight_layout()
+        st.pyplot(fig, use_container_width=False)
+
+    st.markdown("---")
+
+    st.markdown("### ℹ️ Metric Explanation")
+
+    st.write("""
+    - Accuracy: Overall correctness of the model.
+    - Precision: Out of predicted positives, how many are correct.
+    - Recall: Out of actual positives, how many were detected.
+    - F1 Score: Harmonic mean of precision and recall.
+    - Confusion Matrix: Shows correct and incorrect predictions.
+    """)
