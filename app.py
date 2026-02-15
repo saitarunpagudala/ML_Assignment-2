@@ -46,7 +46,9 @@ with open("test_data.csv", "rb") as file:
 
 st.markdown("---")
 
-if uploaded_file:
+run_button = st.button("📊 Evaluate Model", disabled=not uploaded_file)
+
+if uploaded_file and run_button:
 
     data = pd.read_csv(uploaded_file)
 
